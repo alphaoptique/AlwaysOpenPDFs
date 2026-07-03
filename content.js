@@ -1,16 +1,10 @@
+import { getEnabled } from "./lib/settings.js";
+
 function isPDF(url) {
   if (!url) return false;
   return url.toLowerCase().includes(".pdf");
 }
 
-// Vérifier si extension activée
-function isEnabled(callback) {
-  chrome.storage.sync.get(["enabled"], (result) => {
-    callback(result.enabled !== false);
-  });
-}
-
-// Interception des clics
 document.addEventListener("click", function (e) {
   let target = e.target;
 
@@ -24,15 +18,13 @@ document.addEventListener("click", function (e) {
 
   if (!isPDF(url)) return;
 
-  isEnabled((enabled) => {
+  getEnabled().then((enabled) => {
     if (!enabled) return;
 
     console.log("PDF detected:", url);
 
-    // Ouvrir dans un nouvel onglet
     window.open(url, "_blank");
 
-    // Bloquer comportement normal
     e.preventDefault();
     e.stopPropagation();
   });
