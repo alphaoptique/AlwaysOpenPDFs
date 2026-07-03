@@ -1,16 +1,19 @@
-// Always Open PDFs - content script (v1)
-
-// Fonction pour vérifier si un lien est un PDF
-function isPDFLink(url) {
+function isPDF(url) {
   if (!url) return false;
   return url.toLowerCase().includes(".pdf");
 }
 
-// Intercepter les clics sur la page
+// Vérifier si extension activée
+function isEnabled(callback) {
+  chrome.storage.sync.get(["enabled"], (result) => {
+    callback(result.enabled !== false);
+  });
+}
+
+// Interception des clics
 document.addEventListener("click", function (e) {
   let target = e.target;
 
-  // Remonter jusqu'au lien <a>
   while (target && target.tagName !== "A") {
     target = target.parentElement;
   }
@@ -19,14 +22,18 @@ document.addEventListener("click", function (e) {
 
   const url = target.href;
 
-  if (isPDFLink(url)) {
-    console.log("PDF link detected:", url);
+  if (!isPDF(url)) return;
+
+  isEnabled((enabled) => {
+    if (!enabled) return;
+
+    console.log("PDF detected:", url);
 
     // Ouvrir dans un nouvel onglet
     window.open(url, "_blank");
 
-    // Empêcher le téléchargement direct
+    // Bloquer comportement normal
     e.preventDefault();
     e.stopPropagation();
-  }
+  });
 });
