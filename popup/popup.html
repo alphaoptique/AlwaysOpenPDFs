@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Always Open PDFs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 220px;
+      padding: 10px;
+    }
+
+    h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .status {
+      padding: 8px;
+      border-radius: 6px;
+      background: #e8f5e9;
+      color: #2e7d32;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      background: #1976d2;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #125aa3;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Always Open PDFs</h2>
+
+  <div class="status" id="status">
+    Enabled
+  </div>
+
+  <button id="toggleBtn">Toggle</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
