@@ -7,7 +7,8 @@
   "permissions": [
     "storage",
     "tabs",
-    "downloads"
+    "downloads",
+    "notifications"
   ],
 
   "host_permissions": [
@@ -15,8 +16,7 @@
   ],
 
   "background": {
-    "service_worker": "service-worker.js",
-    "type": "module"
+    "service_worker": "service-worker.js"
   },
 
   "action": {
