@@ -1,27 +1,39 @@
-import { getEnabled } from "./lib/settings.js";
-
 function isPDF(url) {
   if (!url) return false;
-  return url.toLowerCase().includes(".pdf");
+
+  url = url.toLowerCase();
+
+  return (
+    url.includes(".pdf") ||
+    url.startsWith("blob:") && url.includes("pdf") ||
+    url.includes("application/pdf")
+  );
 }
 
-document.addEventListener("click", function (e) {
+function getEnabled(callback) {
+  chrome.storage.sync.get(["enabled"], (res) => {
+    callback(res.enabled !== false);
+  });
+}
+
+// Intercepter les clics sur les liens
+document.addEventListener("click", (e) => {
   let target = e.target;
 
   while (target && target.tagName !== "A") {
     target = target.parentElement;
   }
 
-  if (!target) return;
+  if (!target || !target.href) return;
 
   const url = target.href;
 
   if (!isPDF(url)) return;
 
-  getEnabled().then((enabled) => {
+  getEnabled((enabled) => {
     if (!enabled) return;
 
-    console.log("PDF detected:", url);
+    console.log("📄 PDF detected:", url);
 
     window.open(url, "_blank");
 
