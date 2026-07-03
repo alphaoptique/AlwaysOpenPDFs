@@ -1,15 +1,15 @@
 const status = document.getElementById("status");
 const btn = document.getElementById("toggleBtn");
 
-// Charger l'état réel
+// Charger état global
 function loadState() {
-  chrome.storage.sync.get(["enabled"], (result) => {
-    const enabled = result.enabled !== false;
+  chrome.storage.sync.get(["enabled"], (res) => {
+    const enabled = res.enabled !== false;
     updateUI(enabled);
   });
 }
 
-// Mettre à jour l'affichage
+// Mettre à jour UI
 function updateUI(enabled) {
   if (enabled) {
     status.textContent = "Enabled";
@@ -26,8 +26,8 @@ function updateUI(enabled) {
 
 // Toggle ON/OFF
 btn.addEventListener("click", () => {
-  chrome.storage.sync.get(["enabled"], (result) => {
-    const newState = !(result.enabled !== false);
+  chrome.storage.sync.get(["enabled"], (res) => {
+    const newState = !(res.enabled !== false);
 
     chrome.storage.sync.set({ enabled: newState }, () => {
       updateUI(newState);
