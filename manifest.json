@@ -6,7 +6,8 @@
 
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "downloads"
   ],
 
   "host_permissions": [
@@ -18,8 +19,11 @@
   },
 
   "action": {
-    "default_title": "Always Open PDFs"
+    "default_title": "Always Open PDFs",
+    "default_popup": "popup/popup.html"
   },
+
+  "options_page": "options/options.html",
 
   "content_scripts": [
     {
